@@ -1,6 +1,6 @@
 FROM mysql:8.0.19
 
-MAINTAINER jeecgos@163.com
+LABEL maintainer="cacotopia@126.com"
 
 ENV TZ=Asia/Shanghai
 

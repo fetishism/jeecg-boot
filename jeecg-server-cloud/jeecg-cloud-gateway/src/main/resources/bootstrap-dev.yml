@@ -1,0 +1,27 @@
+# ===================================================================
+# Spring Cloud Config bootstrap configuration for the "dev" profile
+# In prod profile, properties will be overwritten by the ones defined in bootstrap-prod.yml
+# ===================================================================
+
+spring:
+  #  profiles:
+  #    # The commented value for `active` can be replaced with valid Spring profiles to load.
+  #    # Otherwise, it will be filled in by maven when building the JAR file
+  #    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+  #    active: dev
+  cloud:
+    nacos:
+      username: ${NACOS_SERVER_USERNAME:nacos}
+      password: ${NACOS_SERVER_PASSWORD:nacos}
+      config:
+        enabled: true
+        namespace: ${NACOS_CONFIG_NAMESPACE:78755410-f295-494c-ab33-338241351590}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        file-extension: yml
+        refresh-enabled: true
+        #加载额外配置，除加载上面主配置文件外，额外加载的公有配置功能
+        extension-configs:
+          - data-id: application.yml
+            refresh: true
+          - data-id: application-dev.yml
+            refresh: true

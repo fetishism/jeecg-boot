@@ -2,14 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>jeecg-server-cloud</artifactId>
         <groupId>org.jeecgframework.boot</groupId>
-        <version>3.4.4</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
+
     <artifactId>jeecg-system-cloud-start</artifactId>
     <description>System项目微服务启动</description>
+
+    <properties>
+        <maven.jib.skip>false</maven.jib.skip>
+        <maven.springboot.skip>false</maven.springboot.skip>
+    </properties>
 
     <dependencies>
         <!-- 引入jeecg-boot-starter-cloud依赖 -->
@@ -61,7 +70,6 @@
            <artifactId>jeecg-cloud-test-shardingsphere</artifactId>
            <version>${jeecgboot.version}</version>
        </dependency>-->
-
     </dependencies>
 
     <build>

@@ -1970,13 +1970,13 @@ CREATE TABLE `sys_sms`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_sms_template`;
 CREATE TABLE `sys_sms_template`  (
-  `id` varchar(32)  NOT NULL COMMENT '主键',
-  `template_name` varchar(50)  NULL DEFAULT NULL COMMENT '模板标题',
-  `template_code` varchar(32)  NOT NULL COMMENT '模板CODE',
-  `template_type` varchar(1)  NOT NULL COMMENT '模板类型：1短信 2邮件 3微信',
-  `template_content` varchar(1000)  NOT NULL COMMENT '模板内容',
-  `template_test_json` varchar(1000)  NULL DEFAULT NULL COMMENT '模板测试json',
-  `use_status` varchar(1)  NULL DEFAULT NULL COMMENT '是否使用中 1是0否',
+    `id` varchar(32)  NOT NULL COMMENT '主键',
+    `template_name` varchar(50)  NULL DEFAULT NULL COMMENT '模板标题',
+    `template_code` varchar(32)  NOT NULL COMMENT '模板CODE',
+    `template_type` varchar(1)  NOT NULL COMMENT '模板类型：1短信 2邮件 3微信',
+    `template_content` varchar(1000)  NOT NULL COMMENT '模板内容',
+    `template_test_json` varchar(1000)  NULL DEFAULT NULL COMMENT '模板测试json',
+    `use_status` varchar(1)  NULL DEFAULT NULL COMMENT '是否使用中 1是0否',
     `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
     `create_by` varchar(32)  NULL DEFAULT NULL COMMENT '创建人登录名称',
     `update_time` datetime NULL DEFAULT NULL COMMENT '更新日期',
@@ -2137,7 +2137,6 @@ CREATE TABLE `sys_user_role`  (
 DROP TABLE IF EXISTS `test_demo`;
 CREATE TABLE `test_demo`  (
   `id` varchar(36)  NOT NULL COMMENT '主键',
-
   `name` varchar(200)  NULL DEFAULT NULL COMMENT '用户名',
   `sex` varchar(32)  NULL DEFAULT NULL COMMENT '性别',
   `age` int(32) NULL DEFAULT NULL COMMENT '年龄',
@@ -2181,7 +2180,6 @@ CREATE TABLE `test_enhance_select`  (
 DROP TABLE IF EXISTS `test_note`;
 CREATE TABLE `test_note`  (
   `id` varchar(36)  NOT NULL COMMENT '主键',
-
   `sys_org_code` varchar(64)  NULL DEFAULT NULL COMMENT '所属部门',
   `name` varchar(32)  NULL DEFAULT NULL COMMENT '用户名',
   `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
@@ -2214,11 +2212,11 @@ CREATE TABLE `test_online_link`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `test_order_main`;
 CREATE TABLE `test_order_main`  (
-  `id` varchar(36)  NOT NULL COMMENT '主键',
-  `order_code` varchar(32)  NULL DEFAULT NULL COMMENT '订单编码',
-  `order_date` datetime NULL DEFAULT NULL COMMENT '下单时间',
-  `descc` varchar(100)  NULL DEFAULT NULL COMMENT '描述',
-  `xiala` varchar(32)  NULL DEFAULT NULL COMMENT '下拉多选',
+    `id` varchar(36)  NOT NULL COMMENT '主键',
+    `order_code` varchar(32)  NULL DEFAULT NULL COMMENT '订单编码',
+    `order_date` datetime NULL DEFAULT NULL COMMENT '下单时间',
+    `descc` varchar(100)  NULL DEFAULT NULL COMMENT '描述',
+    `xiala` varchar(32)  NULL DEFAULT NULL COMMENT '下拉多选',
     `create_by` varchar(50)  NULL DEFAULT NULL COMMENT '创建人',
     `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
     `update_by` varchar(50)  NULL DEFAULT NULL COMMENT '更新人',
@@ -2232,13 +2230,13 @@ CREATE TABLE `test_order_main`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `test_order_product`;
 CREATE TABLE `test_order_product`  (
-  `id` varchar(36)  NOT NULL COMMENT '主键',
-  `product_name` varchar(32)  NULL DEFAULT NULL COMMENT '产品名字',
-  `price` double(32, 0) NULL DEFAULT NULL COMMENT '价格',
-  `num` int(32) NULL DEFAULT NULL COMMENT '数量',
-  `descc` varchar(32)  NULL DEFAULT NULL COMMENT '描述',
-  `order_fk_id` varchar(32)  NOT NULL COMMENT '订单外键ID',
-  `pro_type` varchar(32)  NULL DEFAULT NULL COMMENT '产品类型',
+    `id` varchar(36)  NOT NULL COMMENT '主键',
+    `product_name` varchar(32)  NULL DEFAULT NULL COMMENT '产品名字',
+    `price` double(32, 0) NULL DEFAULT NULL COMMENT '价格',
+    `num` int(32) NULL DEFAULT NULL COMMENT '数量',
+    `descc` varchar(32)  NULL DEFAULT NULL COMMENT '描述',
+    `order_fk_id` varchar(32)  NOT NULL COMMENT '订单外键ID',
+    `pro_type` varchar(32)  NULL DEFAULT NULL COMMENT '产品类型',
     `create_by` varchar(50)  NULL DEFAULT NULL COMMENT '创建人',
     `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
     `update_by` varchar(50)  NULL DEFAULT NULL COMMENT '更新人',
@@ -2251,12 +2249,12 @@ CREATE TABLE `test_order_product`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `test_person`;
 CREATE TABLE `test_person`  (
-  `id` varchar(36)  NOT NULL,
-  `sex` varchar(32)  NULL DEFAULT NULL COMMENT '性别',
-  `name` varchar(200)  NULL DEFAULT NULL COMMENT '用户名',
-  `content` longtext  NULL COMMENT '请假原因',
-  `be_date` datetime NULL DEFAULT NULL COMMENT '请假时间',
-  `qj_days` int(11) NULL DEFAULT NULL COMMENT '请假天数',
+    `id` varchar(36)  NOT NULL,
+    `sex` varchar(32)  NULL DEFAULT NULL COMMENT '性别',
+    `name` varchar(200)  NULL DEFAULT NULL COMMENT '用户名',
+    `content` longtext  NULL COMMENT '请假原因',
+    `be_date` datetime NULL DEFAULT NULL COMMENT '请假时间',
+    `qj_days` int(11) NULL DEFAULT NULL COMMENT '请假天数',
     `create_by` varchar(50)  NULL DEFAULT NULL COMMENT '创建人',
     `create_time` datetime NULL DEFAULT NULL COMMENT '创建日期',
     `update_by` varchar(50)  NULL DEFAULT NULL COMMENT '更新人',
@@ -2341,7 +2339,6 @@ CREATE TABLE `v3_demo1`  (
 DROP TABLE IF EXISTS `v3_hello`;
 CREATE TABLE `v3_hello`  (
   `id` varchar(36)  NOT NULL,
-
   `sys_org_code` varchar(64)  NULL DEFAULT NULL COMMENT '所属部门',
   `name` varchar(32)  NULL DEFAULT NULL COMMENT '名字',
   `age` int(11) NULL DEFAULT NULL COMMENT '年龄',

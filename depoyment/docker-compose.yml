@@ -2,7 +2,7 @@ version: '2'
 services:
   jeecg-boot-mysql:
     build:
-      context: ./db
+      context: ../db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
@@ -30,7 +30,7 @@ services:
 
   jeecg-boot-system:
     build:
-      context: ./jeecg-module-system/jeecg-system-start
+      context: ../jeecg-module-system/jeecg-system-start
     restart: on-failure
     depends_on:
       - jeecg-boot-mysql

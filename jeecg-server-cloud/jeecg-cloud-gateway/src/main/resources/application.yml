@@ -6,9 +6,6 @@ spring:
     name: jeecg-gateway
   main:
     allow-circular-references: true
-  config:
-    import:
-      - optional:nacos:${spring.application.name}-@profile.name@.yaml
   cloud:
     nacos:
       config:
