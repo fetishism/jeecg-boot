@@ -1,6 +1,6 @@
 spring:
   application:
-    name: jeecg-gateway
+    name: jeecg-demo
   config:
     activate:
       on-profile: #spring.profiles.active#

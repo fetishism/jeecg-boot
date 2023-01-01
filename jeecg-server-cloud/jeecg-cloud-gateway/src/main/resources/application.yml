@@ -8,8 +8,6 @@ spring:
     allow-circular-references: true
   cloud:
     nacos:
-      config:
-        server-addr: @config.server-addr@
       discovery:
         server-addr: ${spring.cloud.nacos.config.server-addr}
     gateway:
