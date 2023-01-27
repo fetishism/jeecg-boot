@@ -12,48 +12,55 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RefreshScope
 public class GatewayRoutersConfig {
+
+    @Value("${spring.cloud.nacos.discovery.server-addr}")
+    public String serverAddr;
+
+    @Value("${spring.cloud.nacos.discovery.namespace:#{null}}")
+    public String namespace;
+
     /**
      * 路由配置方式：database，yml，nacos
      */
+    @Value("${jeecg.route.config.data-type:#{null}}")
     public String dataType;
-    public String serverAddr;
-    public String namespace;
+
+    @Value("${jeecg.route.config.data-id:#{null}}")
     public String dataId;
+
+    @Value("${jeecg.route.config.group:DEFAULT_GROUP:#{null}}")
     public String routeGroup;
+
+    @Value("${spring.cloud.nacos.config.username:#{null}}")
     public String username;
+
+    @Value("${spring.cloud.nacos.config.password:#{null}}")
     public String password;
 
-    @Value("${jeecg.route.config.data-type:#{null}}")
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
-    
-    @Value("${jeecg.route.config.data-id:#{null}}")
+
     public void setRouteDataId(String dataId) {
         this.dataId = dataId + ".json";
     }
 
-    @Value("${jeecg.route.config.group:DEFAULT_GROUP:#{null}}")
     public void setRouteGroup(String routeGroup) {
         this.routeGroup = routeGroup;
     }
 
-    @Value("${spring.cloud.nacos.discovery.server-addr}")
     public void setServerAddr(String serverAddr) {
         this.serverAddr = serverAddr;
     }
 
-    @Value("${spring.cloud.nacos.discovery.namespace:#{null}}")
     public void setNamespace(String namespace) {
         this.namespace = namespace;
     }
 
-    @Value("${spring.cloud.nacos.config.username:#{null}}")
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @Value("${spring.cloud.nacos.config.password:#{null}}")
     public void setPassword(String password) {
         this.password = password;
     }

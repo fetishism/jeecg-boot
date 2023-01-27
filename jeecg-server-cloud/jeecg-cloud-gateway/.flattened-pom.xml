@@ -17,10 +17,15 @@
     </license>
   </licenses>
   <properties>
+    <server-port>8080</server-port>
     <maven.springboot.skip>false</maven.springboot.skip>
     <maven.jib.skip>false</maven.jib.skip>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.jeecgframework.boot</groupId>
       <artifactId>jeecg-boot-starter-cloud</artifactId>
@@ -36,16 +41,16 @@
       <artifactId>spring-cloud-starter-gateway</artifactId>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-bootstrap</artifactId>
     </dependency>
     <dependency>
       <groupId>com.alibaba.cloud</groupId>

@@ -18,6 +18,7 @@
     <properties>
         <maven.jib.skip>false</maven.jib.skip>
         <maven.springboot.skip>false</maven.springboot.skip>
+        <server-port>7080</server-port>
     </properties>
 
     <dependencies>
@@ -45,7 +46,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
         <!-- feign 熔断限流、分布式锁、xxljob示例 
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
@@ -72,12 +76,4 @@
        </dependency>-->
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jeecg-cm
+  namespace: jeecg
+data:
+  SPRING_PROFILES_ACTIVE: "dev,apidocs"
+  nacos.serverAddr: "nacos-headless.nacos.svc.cluster.local:8848"
+  nacos.namespace: "a7ae0962-71d2-4807-bafb-39af499165b3"
+  redis.host: "redis-master.redis"
+  group: "SEATA_GROUP"

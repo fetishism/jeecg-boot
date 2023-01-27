@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 /**
  * 路由刷新监听（实现方式：redis监听handler）
+ *
  * @author zyf
  * @date: 2022/4/21 10:55
  */

@@ -4,6 +4,7 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 
 /**
  * 自定义RouteDefinition
+ *
  * @author zyf
  */
 public class MyRouteDefinition extends RouteDefinition {

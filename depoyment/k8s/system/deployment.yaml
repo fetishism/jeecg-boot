@@ -1,0 +1,123 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jeecg-system
+  namespace: jeecg
+  labels:
+    app: jeecg-system
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jeecg-system
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: jeecg-system
+        version: v1
+    spec:
+      containers:
+        - name: jeecg-system
+          image: registry.cn-hangzhou.aliyuncs.com/sinotopia/jeecg-system-cloud-start:2022.0.0-SNAPSHOT
+          imagePullPolicy: Always
+          ports:
+            - name: httpd
+              containerPort: 7080
+            - name: actuator
+              containerPort: 7080
+          env:
+            - name: TZ
+              value: "Asia/Shanghai"
+            # java启动参数
+            - name: JAVA_OPTS
+              value: "-Xmx1024m -Xms256m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m -Dcom.alibaba.nacos.naming.log.level=WARN -Dcom.alibaba.nacos.config.log.level=WARN -Duser.home=/home"
+            - name: SPRING_OUTPUT_ANSI_ENABLED
+              value: "NEVER"
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: jeecg-cm
+                  key: SPRING_PROFILES_ACTIVE
+            - name: LOG_HOME
+              valueFrom:
+                configMapKeyRef:
+                  name: jeecg-cm
+                  key: log.home
+            # 配置中心地址
+            - name: NACOS_SERVER_ADDR
+              valueFrom:
+                configMapKeyRef:
+                  name: jeecg-cm
+                  key: nacos.serverAddr
+            - name: NACOS_SERVER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: jeecg-secret
+                  key: nacos.username
+            - name: NACOS_SERVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jeecg-secret
+                  key: nacos.password
+            - name: NACOS_CONFIG_NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: jeecg-cm
+                  key: nacos.namespace
+            - name: NACOS_DISCOVERY_NAMESPACE
+              valueFrom:
+                configMapKeyRef:
+                  name: jeecg-cm
+                  key: nacos.namespace
+          volumeMounts:
+            - name: nacos-home
+              mountPath: /home/nacos
+            - name: logs-home
+              mountPath: /home/logs
+            - name: logs-app
+              mountPath: /app/logs
+          lifecycle:
+            preStop:
+              httpGet:
+                scheme: HTTP
+                port: actuator
+                path: /actuator/shutdown
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: actuator
+            initialDelaySeconds: 180
+            failureThreshold: 20
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: actuator
+            initialDelaySeconds: 300
+            periodSeconds: 15
+            failureThreshold: 20
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: actuator
+            initialDelaySeconds: 480
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "2Gi"
+      volumes:
+        - name: nacos-home
+          persistentVolumeClaim:
+            claimName: home-nacos
+        - name: logs-home
+          persistentVolumeClaim:
+            claimName: home-logs-system
+        - name: logs-app
+          persistentVolumeClaim:
+            claimName: app-logs-system

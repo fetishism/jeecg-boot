@@ -82,7 +82,7 @@ public class DynamicRouteLoader implements ApplicationEventPublisherAware {
 
 
     public void init(BaseMap baseMap) {
-        log.info("初始化路由模式，dataType："+ gatewayRoutersConfig.getDataType());
+        log.info("初始化路由模式，dataType：" + gatewayRoutersConfig.getDataType());
         if (RouterDataType.nacos.toString().endsWith(gatewayRoutersConfig.getDataType())) {
             loadRoutesByNacos();
         }
@@ -91,13 +91,14 @@ public class DynamicRouteLoader implements ApplicationEventPublisherAware {
             loadRoutesByRedis(baseMap);
         }
     }
+
     /**
      * 刷新路由
      *
      * @return
      */
     public Mono<Void> refresh(BaseMap baseMap) {
-        log.info("初始化路由模式，dataType："+ gatewayRoutersConfig.getDataType());
+        log.info("初始化路由模式，dataType：" + gatewayRoutersConfig.getDataType());
         if (!RouterDataType.yml.toString().endsWith(gatewayRoutersConfig.getDataType())) {
             this.init(baseMap);
         }
@@ -121,7 +122,7 @@ public class DynamicRouteLoader implements ApplicationEventPublisherAware {
             if (StringUtils.isNotBlank(configInfo)) {
                 log.info("获取网关当前配置:\r\n{}", configInfo);
                 routes = JSON.parseArray(configInfo, RouteDefinition.class);
-            }else{
+            } else {
                 log.warn("ERROR: 从Nacos获取网关配置为空，请确认Nacos配置是否正确！");
             }
         } catch (NacosException e) {
@@ -157,20 +158,20 @@ public class DynamicRouteLoader implements ApplicationEventPublisherAware {
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             log.warn("ERROR: 从Redis获取网关配置为空，请确认system服务是否启动成功！");
         }
-        
+
         for (MyRouteDefinition definition : routes) {
             log.info("update route : {}", definition.toString());
-            Integer status=definition.getStatus();
-            if(status.equals(0)){
+            Integer status = definition.getStatus();
+            if (status.equals(0)) {
                 dynamicRouteService.delete(definition.getId());
-            }else{
+            } else {
                 dynamicRouteService.add(definition);
             }
         }
-        if(ObjectUtils.isNotEmpty(baseMap)){
+        if (ObjectUtils.isNotEmpty(baseMap)) {
             String delRouterId = baseMap.get("delRouterId");
             if (ObjectUtils.isNotEmpty(delRouterId)) {
                 dynamicRouteService.delete(delRouterId);
@@ -211,20 +212,20 @@ public class DynamicRouteLoader implements ApplicationEventPublisherAware {
                     JSONObject json = (JSONObject) map;
                     PredicateDefinition predicateDefinition = new PredicateDefinition();
                     //update-begin-author:zyf date:20220419 for:【VUEN-762】路由条件添加异常问题,原因是部分路由条件参数需要设置固定key
-                    String name=json.getString("name");
+                    String name = json.getString("name");
                     predicateDefinition.setName(name);
                     //路由条件是否拼接Key
-                    if(ArrayUtil.contains(GEN_KEY_ROUTERS,name)) {
+                    if (ArrayUtil.contains(GEN_KEY_ROUTERS, name)) {
                         JSONArray jsonArray = json.getJSONArray("args");
                         for (int j = 0; j < jsonArray.size(); j++) {
                             predicateDefinition.addArg("_genkey" + j, jsonArray.get(j).toString());
                         }
-                    }else{
+                    } else {
                         JSONObject jsonObject = json.getJSONObject("args");
-                        if(ObjectUtil.isNotEmpty(jsonObject)){
+                        if (ObjectUtil.isNotEmpty(jsonObject)) {
                             for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
-                                Object valueObj=entry.getValue();
-                                if(ObjectUtil.isNotEmpty(valueObj)) {
+                                Object valueObj = entry.getValue();
+                                if (ObjectUtil.isNotEmpty(valueObj)) {
                                     predicateDefinition.addArg(entry.getKey(), valueObj.toString());
                                 }
                             }
@@ -344,13 +345,13 @@ public class DynamicRouteLoader implements ApplicationEventPublisherAware {
         try {
             Properties properties = new Properties();
             properties.setProperty("serverAddr", gatewayRoutersConfig.getServerAddr());
-            if(StringUtils.isNotBlank(gatewayRoutersConfig.getNamespace())){
+            if (StringUtils.isNotBlank(gatewayRoutersConfig.getNamespace())) {
                 properties.setProperty("namespace", gatewayRoutersConfig.getNamespace());
             }
-            if(StringUtils.isNotBlank( gatewayRoutersConfig.getUsername())){
+            if (StringUtils.isNotBlank(gatewayRoutersConfig.getUsername())) {
                 properties.setProperty("username", gatewayRoutersConfig.getUsername());
             }
-            if(StringUtils.isNotBlank(gatewayRoutersConfig.getPassword())){
+            if (StringUtils.isNotBlank(gatewayRoutersConfig.getPassword())) {
                 properties.setProperty("password", gatewayRoutersConfig.getPassword());
             }
             return configService = NacosFactory.createConfigService(properties);

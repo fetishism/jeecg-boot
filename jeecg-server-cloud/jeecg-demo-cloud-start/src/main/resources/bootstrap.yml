@@ -26,7 +26,7 @@ spring:
       password: ${NACOS_SERVER_PASSWORD:nacos}
       config:
         enabled: true
-        namespace: ${NACOS_CONFIG_NAMESPACE:78755410-f295-494c-ab33-338241351590}
+        namespace: ${NACOS_CONFIG_NAMESPACE:a7ae0962-71d2-4807-bafb-39af499165b3}
         server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
         file-extension: yml
         refresh-enabled: true

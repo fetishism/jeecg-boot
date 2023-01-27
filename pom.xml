@@ -24,7 +24,7 @@
         <!-- 微服务 -->
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
-        <alibaba.nacos.version>2.0.4</alibaba.nacos.version>
+        <nacos.version>2.1.0</nacos.version>
 
         <xxl-job-core.version>2.2.0</xxl-job-core.version>
         <fastjson.version>1.2.83</fastjson.version>
@@ -76,6 +76,7 @@
         <from-registry-password>${env.ALIYUN_REGISTRY_PASSWORD}</from-registry-password>
         <to-registry-username>${env.ALIYUN_REGISTRY_USERNAME}</to-registry-username>
         <to-registry-password>${env.ALIYUN_REGISTRY_PASSWORD}</to-registry-password>
+        <server-port/>
     </properties>
 
     <modules>
@@ -408,11 +409,11 @@
                                 <arg>/entrypoint.sh</arg>
                             </entrypoint>
                             <ports>
-                                <port>8080</port>
+                                <port>${server-port}</port>
                             </ports>
                             <environment>
                                 <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
-                                <JHIPSTER_SLEEP>10</JHIPSTER_SLEEP>
+                                <STARTUP_SLEEP>10</STARTUP_SLEEP>
                             </environment>
                             <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                             <user>1000</user>

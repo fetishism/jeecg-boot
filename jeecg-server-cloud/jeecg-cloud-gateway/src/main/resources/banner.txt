@@ -1,0 +1,10 @@
+${AnsiColor.YELLOW}     _______.___________.    ___      .______      ${AnsiColor.YELLOW}   ____    __    ____  ___      .______          _______.
+${AnsiColor.YELLOW}    /       |           |   /   \     |   _  \     ${AnsiColor.YELLOW}   \   \  /  \  /   / /   \     |   _  \        /       |
+${AnsiColor.YELLOW}   |   (----`---|  |----`  /  ^  \    |  |_)  |    ${AnsiColor.YELLOW}    \   \/    \/   / /  ^  \    |  |_)  |      |   (----`
+${AnsiColor.YELLOW}    \   \       |  |      /  /_\  \   |      /     ${AnsiColor.YELLOW}     \            / /  /_\  \   |      /        \   \
+${AnsiColor.YELLOW}.----)   |      |  |     /  _____  \  |  |\  \----.${AnsiColor.YELLOW}      \    /\    / /  _____  \  |  |\  \----.----)   |
+${AnsiColor.YELLOW}|_______/       |__|    /__/     \__\ | _| `._____|${AnsiColor.YELLOW}       \__/  \__/ /__/     \__\ | _| `._____|_______/
+
+${AnsiColor.BRIGHT_BLUE}:: SendPulsar 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: https://www.sendpulsar.com ::${AnsiColor.DEFAULT}
+:: ${spring.application.name} ::  ${spring-boot.version}

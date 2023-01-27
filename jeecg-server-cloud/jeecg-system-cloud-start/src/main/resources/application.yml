@@ -1,16 +1,47 @@
 server:
-  port: 7001
+  port: 7080
+
+management:
+  server:
+    port: 7080
 
 spring:
-  application:
-    name: jeecg-system
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
   cloud:
     nacos:
-      config:
-        server-addr: @config.server-addr@
       discovery:
-        server-addr: ${spring.cloud.nacos.config.server-addr}
-  config:
-    import:
-      - optional:nacos:jeecg.yaml
-      - optional:nacos:jeecg-@profile.name@.yaml
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:a7ae0962-71d2-4807-bafb-39af499165b3}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  #        username: 192.168.0.135:8848
+  #        password:
+  #        watchDelay: 30000
+  #        service:
+  #        weight: 1
+  #        clusterName: DEFAULT
+  #        group: DEFAULT_GROUP
+  #        namingLoadCacheAtStart:  false
+  #        metadata:
+  #        registerEnabled: true
+  # ip
+  # networkInterface
+  # port
+  # secure
+  # accessKey
+  # secretKey
+  # heartBeatInterval
+  # heartBeatTimeout
+  # ipDeleteTimeout
+  # instanceEnabled
+  # ephemeral
+
+mybatis-plus:
+  mapper-locations: classpath*:org/jeecg/modules/**/xml/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      id-type: ASSIGN_ID
+      table-underline: true
+  configuration:
+    call-setters-on-nulls: true

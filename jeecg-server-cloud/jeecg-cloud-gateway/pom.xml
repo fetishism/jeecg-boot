@@ -17,9 +17,14 @@
     <properties>
         <maven.jib.skip>false</maven.jib.skip>
         <maven.springboot.skip>false</maven.springboot.skip>
+        <server-port>8080</server-port>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
         <!-- jeecg 微服务基础依赖-->
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
@@ -36,10 +41,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
         <!-- redis方式限流 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -49,6 +50,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <!--sentinel 限流熔点降级-->
         <dependency>
@@ -75,7 +80,6 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-web-servlet</artifactId>
         </dependency>
-
         <!-- Swagger API文档 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

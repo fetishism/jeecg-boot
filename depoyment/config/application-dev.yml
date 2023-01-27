@@ -1,5 +1,9 @@
 spring:
   datasource:
+    url: jdbc:mysql://192.168.31.151:3306/jeecg-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: yhl1qaz2wsx
     druid:
       stat-view-servlet:
         enabled: true
@@ -9,6 +13,12 @@ spring:
       web-stat-filter:
         enabled: true
     dynamic:
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.31.151:3306/jeecg-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          username: root
+          password: yhl1qaz2wsx
       druid:
         initial-size: 5
         min-idle: 5
@@ -24,17 +34,11 @@ spring:
         maxPoolPreparedStatementPerConnectionSize: 20
         filters: stat,wall,slf4j
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
-      datasource:
-        master:
-          url: jdbc:mysql://jeecg-boot-mysql:3306/jeecg-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-          username: root
-          password: root
-          driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-    database: 0
-    host: jeecg-boot-redis
-    password:
+    host: 192.168.31.151
     port: 6379
+    database: 0
+    password: yhl1qaz2wsx
   rabbitmq:
     host: jeecg-boot-rabbitmq
     username: guest
@@ -50,8 +54,62 @@ spring:
         max-concurrency: 1
         retry:
           enabled: true
+
+management:
+  endpoints:
+    web:
+      # base-path: /management
+      exposure:
+        include: [ 'configprops', 'env', 'health', 'info', 'logfile', 'loggers', 'prometheus', 'threaddump' ,'service-init-registry']
+  endpoint:
+    health:
+      show-details: when_authorized
+      roles: 'ROLE_ADMIN'
+    jhimetrics:
+      enabled: true
+  info:
+    git:
+      mode: full
+  health:
+    group:
+      liveness:
+        include: livenessState
+      readiness:
+        include: readinessState,datasource
+    probes:
+      enabled: true
+    mail:
+      enabled: false # When using the MailService, configure an SMTP server and set this to true
+    ldap:
+      enabled: false
+  metrics:
+    export:
+      # Prometheus is the default metrics backend
+      prometheus:
+        enabled: true
+        step: 60
+    enable:
+      http: true
+      jvm: true
+      logback: true
+      process: true
+      system: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      percentiles:
+        all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+    tags:
+      application: ${spring.application.name}
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+
 minidao:
   base-package: org.jeecg.modules.jmreport.*,org.jeecg.modules.drag.*
+
 jeecg:
   signatureSecret: dd05f1c54d63749eda95f9fa6d49v442a
   signUrls: /sys/dict/getDictItems/*,/sys/dict/loadDict/*,/sys/dict/loadDictOrderByValue/*,/sys/dict/loadDictItem/*,/sys/dict/loadTreeData,/sys/api/queryTableDictItemsByCode,/sys/api/queryFilterTableDictInfo,/sys/api/queryTableDictByKeys,/sys/api/translateDictFromTable,/sys/api/translateDictFromTableByKeys
@@ -63,7 +121,7 @@ jeecg:
     upload: /opt/upFiles
     webapp: /opt/webapp
   shiro:
-    excludeUrls: /test/jeecgDemo/demo3,/test/jeecgDemo/redisDemo/**,/category/**,/visual/**,/map/**,/jmreport/bigscreen2/**
+    excludeUrls: /test/jeecgDemo/demo3,/test/jeecgDemo/redisDemo/**,/category/**,/visual/**,/map/**,/jmreport/bigscreen2/**,/actuator/**
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
     accessKey: ??
@@ -96,21 +154,25 @@ jeecg:
     logPath: logs/jeecg/job/jobhandler/
     logRetentionDays: 30
   redisson:
-    address: jeecg-boot-redis:6379
-    password:
-    type: STANDALONE
     enabled: true
+    address: 192.168.31.151:6379
+    password: yhl1qaz2wsx
+    type: STANDALONE
+
 logging:
   level:
     org.jeecg.modules.system.mapper : info
+
 cas:
   prefixUrl: http://localhost:8888/cas
+
 knife4j:
   production: false
   basic:
     enable: false
     username: jeecg
     password: jeecg1314
+
 justauth:
   enabled: true
   type:
@@ -131,6 +193,7 @@ justauth:
     type: default
     prefix: 'demo::'
     timeout: 1h
+
 third-app:
   enabled: false
   type:

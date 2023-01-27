@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 路由参数模型
+ *
  * @author zyf
  * @date: 2022/4/21 10:55
  */

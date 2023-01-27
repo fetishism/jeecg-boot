@@ -1,15 +1,17 @@
 spring:
   application:
     name: jeecg-system
-  config:
-    activate:
-      on-profile: #spring.profiles.active#
+  profiles:
+    active: dev
+#  config:
+#    activate:
+#      on-profile: dev
+#      on-profile: #spring.profiles.active#
+#      on-profile: @profile.name@
   cloud:
     config:
       # 是否启用配置中心
       enabled: ${SPRING_CLOUD_CONFIG_ENABLED:false}
-      import:
-        - optional:nacos:${spring.application.name}-@profile.name@.yaml
       # 配置中心地址
       uri: ${SPRING_CLOUD_CONFIG_URI:http://dev.hzero.org:8010}
       fail-fast: false
@@ -21,13 +23,18 @@ spring:
         maxInterval: 2000
       # 标签
       label: ${SPRING_CLOUD_CONFIG_LABEL:}
+#      import:
+#        - optional:nacos:${spring.application.name}-@profile.name@.yaml
+#    import:
+#      - optional:nacos:jeecg.yaml
+#      - optional:nacos:jeecg-@profile.name@.yaml
     nacos:
       username: ${NACOS_SERVER_USERNAME:nacos}
       password: ${NACOS_SERVER_PASSWORD:nacos}
       config:
         enabled: true
-        namespace: ${NACOS_CONFIG_NAMESPACE:78755410-f295-494c-ab33-338241351590}
         server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_CONFIG_NAMESPACE:a7ae0962-71d2-4807-bafb-39af499165b3}
         file-extension: yml
         refresh-enabled: true
         #加载额外配置，除加载上面主配置文件外，额外加载的公有配置功能
@@ -36,4 +43,3 @@ spring:
             refresh: true
           - data-id: application-dev.yml
             refresh: true
-

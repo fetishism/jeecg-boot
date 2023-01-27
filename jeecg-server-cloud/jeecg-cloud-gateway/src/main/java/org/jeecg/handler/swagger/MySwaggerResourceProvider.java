@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
@@ -19,6 +18,7 @@ import java.util.*;
 
 /**
  * 聚合各个服务的swagger接口
+ *
  * @author zyf
  * @date: 2022/4/21 10:55
  */
@@ -46,11 +46,11 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
      */
     @Value("${spring.cloud.nacos.discovery.namespace:#{null}}")
     private String namespace;
-    
+
     /**
      * Swagger中需要排除的服务
      */
-    private String[] excludeServiceIds=new String[]{"jeecg-cloud-monitor"};
+    private String[] excludeServiceIds = new String[]{"jeecg-cloud-monitor"};
 
 
     /**
@@ -69,16 +69,14 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
         List<SwaggerResource> resources = new ArrayList<>();
         List<String> routeHosts = new ArrayList<>();
         // 获取所有可用的host：serviceId
-        routeLocator.getRoutes().filter(route -> route.getUri().getHost() != null)
-                .filter(route -> !self.equals(route.getUri().getHost()))
-                .subscribe(route ->{
-                    //update-begin---author:zyf ---date:20220413 for：过滤掉无效路由,避免接口文档报错无法打开
-                    boolean hasRoute=checkRoute(route.getId());
-                    if(hasRoute){
-                        routeHosts.add(route.getUri().getHost());
-                    }
-                    //update-end---author:zyf ---date:20220413 for：过滤掉无效路由,避免接口文档报错无法打开
-                });
+        routeLocator.getRoutes().filter(route -> route.getUri().getHost() != null).filter(route -> !self.equals(route.getUri().getHost())).subscribe(route -> {
+            //update-begin---author:zyf ---date:20220413 for：过滤掉无效路由,避免接口文档报错无法打开
+            boolean hasRoute = checkRoute(route.getId());
+            if (hasRoute) {
+                routeHosts.add(route.getUri().getHost());
+            }
+            //update-end---author:zyf ---date:20220413 for：过滤掉无效路由,避免接口文档报错无法打开
+        });
 
         // 记录已经添加过的server，存在同一个应用注册了多个服务在nacos上
         Set<String> dealed = new HashSet<>();
@@ -87,13 +85,13 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
             String url = "/" + instance.toLowerCase() + SWAGGER2URL;
             if (!dealed.contains(url)) {
                 dealed.add(url);
-                log.info(" Gateway add SwaggerResource: {}",url);
+                log.info(" Gateway add SwaggerResource: {}", url);
                 SwaggerResource swaggerResource = new SwaggerResource();
                 swaggerResource.setUrl(url);
                 swaggerResource.setSwaggerVersion("2.0");
                 swaggerResource.setName(instance);
                 //Swagger排除不展示的服务
-                if(!ArrayUtil.contains(excludeServiceIds,instance)){
+                if (!ArrayUtil.contains(excludeServiceIds, instance)) {
                     resources.add(swaggerResource);
                 }
             }
@@ -103,6 +101,7 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
 
     /**
      * 检测nacos中是否有健康实例
+     *
      * @param routeId
      * @return
      */
@@ -110,13 +109,13 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
         Boolean hasRoute = false;
         try {
             //修复使用带命名空间启动网关swagger看不到接口文档的问题
-            Properties properties=new Properties();
-            properties.setProperty("serverAddr",serverAddr);
-            if(namespace!=null && !"".equals(namespace)){
-                properties.setProperty("namespace",namespace);
+            Properties properties = new Properties();
+            properties.setProperty("serverAddr", serverAddr);
+            if (namespace != null && !"".equals(namespace)) {
+                properties.setProperty("namespace", namespace);
             }
             NamingService naming = NamingFactory.createNamingService(properties);
-            
+
             List<Instance> list = naming.selectInstances(routeId, true);
             if (ObjectUtil.isNotEmpty(list)) {
                 hasRoute = true;

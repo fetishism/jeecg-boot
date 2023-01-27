@@ -1,7 +1,6 @@
 package org.jeecg.loader.repository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jeecg.loader.repository.MyInMemoryRouteDefinitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -45,8 +44,8 @@ public class DynamicRouteService implements ApplicationEventPublisherAware {
         try {
             repository.delete(Mono.just(id)).subscribe();
             this.publisher.publishEvent(new RefreshRoutesEvent(this));
-        }catch (Exception e){
-            log.warn(e.getMessage(),e);
+        } catch (Exception e) {
+            log.warn(e.getMessage(), e);
         }
     }
 
@@ -82,7 +81,7 @@ public class DynamicRouteService implements ApplicationEventPublisherAware {
         try {
             repository.save(Mono.just(definition)).subscribe();
         } catch (Exception e) {
-            log.warn(e.getMessage(),e);
+            log.warn(e.getMessage(), e);
         }
         return "success";
     }

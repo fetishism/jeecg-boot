@@ -1,15 +1,19 @@
 server:
-  port: 9999
+  port: 8080
+
+management:
+  server:
+    port: 8080
 
 spring:
-  application:
-    name: jeecg-gateway
   main:
     allow-circular-references: true
   cloud:
     nacos:
       discovery:
-        server-addr: ${spring.cloud.nacos.config.server-addr}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:a7ae0962-71d2-4807-bafb-39af499165b3}
+        group: ${NACOS_DISCOVERY_GROUP:DEFAULT_GROUP}
     gateway:
       discovery:
         locator:
@@ -33,11 +37,11 @@ spring:
       # 取消Sentinel控制台懒加载
       eager: false
       datasource:
-        #流控规则
+        # 流控规则
         flow:  # 指定数据源名称
           # 指定nacos数据源
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             # 指定配置文件
             dataId: ${spring.application.name}-flow-rules
             # 指定分组
@@ -46,50 +50,50 @@ spring:
             rule-type: flow
             # 指定配置文件数据格式
             data-type: json
-        #降级规则
+        # 降级规则
         degrade:
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             dataId: ${spring.application.name}-degrade-rules
             groupId: SENTINEL_GROUP
             rule-type: degrade
             data-type: json
-        #系统规则
+        # 系统规则
         system:
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             dataId: ${spring.application.name}-system-rules
             groupId: SENTINEL_GROUP
             rule-type: system
             data-type: json
-        #授权规则
+        # 授权规则
         authority:
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             dataId: ${spring.application.name}-authority-rules
             groupId: SENTINEL_GROUP
             rule-type: authority
             data-type: json
-        #热点参数
+        # 热点参数
         param-flow:
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             dataId: ${spring.application.name}-param-rules
             groupId: SENTINEL_GROUP
             rule-type: param-flow
             data-type: json
-        #网关流控规则
+        # 网关流控规则
         gw-flow:
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             dataId: ${spring.application.name}-flow-rules
             groupId: SENTINEL_GROUP
             rule-type: gw-flow
             data-type: json
-        #API流控规则
+        # API流控规则
         gw-api-group:
           nacos:
-            server-addr: @config.server-addr@
+            server-addr: ${spring.cloud.nacos.config.server-addr}
             dataId: ${spring.application.name}-api-rules
             groupId: SENTINEL_GROUP
             rule-type: gw-api-group

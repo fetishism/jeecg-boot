@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jeecg-gateway
+  namespace: jeecg
+  labels:
+    app: jeecg-gateway
+    version: v1
+spec:
+  type: ClusterIP
+  selector:
+    app: jeecg-gateway
+    version: v1
+  ports:
+    - name: httpd
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

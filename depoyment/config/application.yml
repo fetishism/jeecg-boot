@@ -9,6 +9,7 @@ server:
     enabled: true
     min-response-size: 1024
     mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
+
 management:
   health:
     mail:
@@ -22,11 +23,16 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
 spring:
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  resource:
+    static-locations: classpath:/static/,classpath:/public/
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   mail:
     host: smtp.163.com
     username: jeecgos@163.com
@@ -38,6 +44,29 @@ spring:
           starttls:
             enable: true
             required: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  aop:
+    proxy-target-class: true
+  mvc:
+    static-path-pattern: /**
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    open-in-view: false
+  freemarker:
+    suffix: .ftl
+    content-type: text/html
+    charset: UTF-8
+    cache: false
+    prefer-file-system-access: false
+    template-loader-path:
+      - classpath:/templates
+  activiti:
+    check-process-definitions: false
+    async-executor-activate: false
+    job-executor-activate: false
   quartz:
     job-store-type: jdbc
     initialize-schema: embedded
@@ -62,33 +91,12 @@ spring:
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
-  jackson:
-    date-format:   yyyy-MM-dd HH:mm:ss
-    time-zone:   GMT+8
-  aop:
-    proxy-target-class: true
-  activiti:
-    check-process-definitions: false
-    async-executor-activate: false
-    job-executor-activate: false
-  jpa:
-    open-in-view: false
-  freemarker:
-    suffix: .ftl
-    content-type: text/html
-    charset: UTF-8
-    cache: false
-    prefer-file-system-access: false
-    template-loader-path:
-      - classpath:/templates
-  mvc:
-    static-path-pattern: /**
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  resource:
-    static-locations: classpath:/static/,classpath:/public/
-  autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  nacos:
+    cloud:
+      discovery:
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:a7ae0962-71d2-4807-bafb-39af499165b3}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+
 mybatis-plus:
   mapper-locations: classpath*:org/jeecg/modules/**/xml/*Mapper.xml
   global-config:
